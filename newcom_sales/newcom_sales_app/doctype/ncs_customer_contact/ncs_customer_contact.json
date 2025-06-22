@@ -1,0 +1,116 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "format:{contact_type}-{contact_name}",
+ "creation": "2025-06-05 12:57:58.304711",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "contact_type",
+  "contact_name",
+  "designation",
+  "column_break_lc1u9",
+  "contact_number",
+  "email_id",
+  "dob",
+  "disabled",
+  "section_break_tlpxs",
+  "links"
+ ],
+ "fields": [
+  {
+   "fieldname": "contact_type",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Contact Type",
+   "options": "Contact Type",
+   "reqd": 1
+  },
+  {
+   "fieldname": "contact_name",
+   "fieldtype": "Data",
+   "label": "Contact Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "designation",
+   "fieldtype": "Data",
+   "label": "Designation"
+  },
+  {
+   "fieldname": "column_break_lc1u9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "contact_number",
+   "fieldtype": "Data",
+   "label": "Contact Number"
+  },
+  {
+   "fieldname": "email_id",
+   "fieldtype": "Data",
+   "label": "Email ID"
+  },
+  {
+   "fieldname": "dob",
+   "fieldtype": "Date",
+   "label": "DOB"
+  },
+  {
+   "default": "0",
+   "fieldname": "disabled",
+   "fieldtype": "Check",
+   "label": "Disabled"
+  },
+  {
+   "fieldname": "section_break_tlpxs",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "links",
+   "fieldtype": "Table",
+   "label": "Links",
+   "options": "Dynamic Link"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-06-22 20:31:58.663091",
+ "modified_by": "Administrator",
+ "module": "Newcom Sales App",
+ "name": "NCS Customer Contact",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

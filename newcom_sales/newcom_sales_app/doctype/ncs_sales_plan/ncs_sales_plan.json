@@ -1,0 +1,416 @@
+{
+ "actions": [],
+ "allow_import": 1,
+ "allow_rename": 1,
+ "autoname": "field:customer_code",
+ "creation": "2025-06-04 13:03:23.502250",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "naming_series",
+  "customer_code",
+  "customer_name",
+  "status",
+  "customer_group",
+  "customer_sub_group",
+  "column_break_rw7fi",
+  "nature_of_business",
+  "sales_person",
+  "customer_prime_brands",
+  "newcom_focus_brands_with_customer",
+  "customer_legal_name",
+  "address_and_contact_section",
+  "customer_address",
+  "location",
+  "area",
+  "column_break_eb9rz",
+  "city",
+  "country",
+  "landline",
+  "website_address",
+  "section_break_5dpp3",
+  "primary_contact_name",
+  "primary_contact_designation",
+  "column_break_p2ygj",
+  "primary_contact_number",
+  "primary_contact_email_id",
+  "primary_contact_dob",
+  "contacts_section",
+  "ncs_contact_html",
+  "column_break_lzsy2",
+  "section_break_hygig",
+  "customer_crtl_number",
+  "customer_crtl_expiry_date",
+  "column_break_5mva9",
+  "customer_vat_no",
+  "customer_tin",
+  "owner_details_section",
+  "owner_name",
+  "passport_no",
+  "owner_passport_expiry",
+  "owner_naitionality",
+  "column_break_yl9qa",
+  "owner_id_number",
+  "owner_id_expiry_date",
+  "owner_contact_no",
+  "owner_email_id",
+  "owner_dob",
+  "revenue_tab",
+  "revenue_2019",
+  "revenue_2020",
+  "revenue_2021",
+  "column_break_xhubg",
+  "revenue_2022",
+  "revenue_2023",
+  "revenue_2024",
+  "revenue_2025"
+ ],
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "hidden": 1,
+   "label": "Naming Series",
+   "options": "NC-CD-.YYYY.-.####"
+  },
+  {
+   "fieldname": "customer_code",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Customer Code",
+   "unique": 1
+  },
+  {
+   "fieldname": "customer_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
+   "label": "Customer Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Active\nInactive\nClosed"
+  },
+  {
+   "fieldname": "customer_group",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Customer Group",
+   "options": "Customer Group"
+  },
+  {
+   "fieldname": "customer_sub_group",
+   "fieldtype": "Link",
+   "in_standard_filter": 1,
+   "label": "Customer Sub Group",
+   "options": "Division"
+  },
+  {
+   "fieldname": "column_break_rw7fi",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "nature_of_business",
+   "fieldtype": "Link",
+   "label": "Nature of Business",
+   "options": "Customer Nature"
+  },
+  {
+   "fieldname": "sales_person",
+   "fieldtype": "Link",
+   "label": "Sales Person",
+   "options": "Sales Person"
+  },
+  {
+   "fieldname": "customer_prime_brands",
+   "fieldtype": "Data",
+   "label": "Customer Prime Brands"
+  },
+  {
+   "fieldname": "newcom_focus_brands_with_customer",
+   "fieldtype": "Data",
+   "label": "Newcom Focus Brands With Customer"
+  },
+  {
+   "description": "As per trade license",
+   "fieldname": "customer_legal_name",
+   "fieldtype": "Data",
+   "label": "Customer Legal Name"
+  },
+  {
+   "fieldname": "address_and_contact_section",
+   "fieldtype": "Tab Break",
+   "label": "Address & Contact"
+  },
+  {
+   "fieldname": "customer_address",
+   "fieldtype": "Data",
+   "label": "Customer Address"
+  },
+  {
+   "fieldname": "location",
+   "fieldtype": "Data",
+   "label": "Location"
+  },
+  {
+   "fieldname": "area",
+   "fieldtype": "Data",
+   "label": "Area"
+  },
+  {
+   "fieldname": "column_break_eb9rz",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "city",
+   "fieldtype": "Data",
+   "label": "City"
+  },
+  {
+   "fieldname": "country",
+   "fieldtype": "Link",
+   "label": "Country",
+   "options": "Country"
+  },
+  {
+   "fieldname": "landline",
+   "fieldtype": "Data",
+   "label": "Landline"
+  },
+  {
+   "fieldname": "website_address",
+   "fieldtype": "Data",
+   "label": "Website Address"
+  },
+  {
+   "fieldname": "section_break_5dpp3",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "primary_contact_name",
+   "fieldtype": "Data",
+   "label": "Primary Contact Name"
+  },
+  {
+   "fieldname": "primary_contact_designation",
+   "fieldtype": "Data",
+   "label": "Primary Contact Designation"
+  },
+  {
+   "fieldname": "column_break_p2ygj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "primary_contact_number",
+   "fieldtype": "Data",
+   "label": "Primary Contact Number"
+  },
+  {
+   "fieldname": "primary_contact_email_id",
+   "fieldtype": "Data",
+   "label": "Primary Contact Email ID"
+  },
+  {
+   "fieldname": "primary_contact_dob",
+   "fieldtype": "Date",
+   "label": "Primary Contact DOB"
+  },
+  {
+   "fieldname": "contacts_section",
+   "fieldtype": "Section Break",
+   "label": "Contacts"
+  },
+  {
+   "depends_on": "eval: !doc.__islocal",
+   "fieldname": "ncs_contact_html",
+   "fieldtype": "HTML",
+   "label": "Contact HTML",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_lzsy2",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_hygig",
+   "fieldtype": "Tab Break",
+   "label": "Company Details"
+  },
+  {
+   "fieldname": "customer_crtl_number",
+   "fieldtype": "Data",
+   "label": "Customer CR/TL Number"
+  },
+  {
+   "fieldname": "customer_crtl_expiry_date",
+   "fieldtype": "Date",
+   "label": "Customer CR/TL Expiry Date"
+  },
+  {
+   "fieldname": "column_break_5mva9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer_vat_no",
+   "fieldtype": "Data",
+   "label": "Customer VAT No."
+  },
+  {
+   "fieldname": "customer_tin",
+   "fieldtype": "Data",
+   "label": "Customer TIN"
+  },
+  {
+   "fieldname": "owner_details_section",
+   "fieldtype": "Section Break",
+   "label": "Owner Details"
+  },
+  {
+   "fieldname": "owner_name",
+   "fieldtype": "Data",
+   "label": "Owner Name"
+  },
+  {
+   "fieldname": "passport_no",
+   "fieldtype": "Data",
+   "label": "Passport No."
+  },
+  {
+   "fieldname": "owner_passport_expiry",
+   "fieldtype": "Date",
+   "label": "Owner Passport Expiry"
+  },
+  {
+   "fieldname": "owner_naitionality",
+   "fieldtype": "Data",
+   "label": "Owner Naitionality"
+  },
+  {
+   "fieldname": "column_break_yl9qa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "owner_id_number",
+   "fieldtype": "Data",
+   "label": "Owner ID Number"
+  },
+  {
+   "fieldname": "owner_id_expiry_date",
+   "fieldtype": "Data",
+   "label": "Owner ID Expiry Date"
+  },
+  {
+   "fieldname": "owner_contact_no",
+   "fieldtype": "Data",
+   "label": "Owner Contact No."
+  },
+  {
+   "fieldname": "owner_email_id",
+   "fieldtype": "Data",
+   "label": "Owner Email ID"
+  },
+  {
+   "fieldname": "owner_dob",
+   "fieldtype": "Date",
+   "label": "Owner DOB"
+  },
+  {
+   "fieldname": "revenue_tab",
+   "fieldtype": "Tab Break",
+   "label": "Revenue"
+  },
+  {
+   "fieldname": "revenue_2019",
+   "fieldtype": "Currency",
+   "label": "Revenue 2019"
+  },
+  {
+   "fieldname": "revenue_2020",
+   "fieldtype": "Currency",
+   "label": "Revenue 2020"
+  },
+  {
+   "fieldname": "revenue_2021",
+   "fieldtype": "Currency",
+   "label": "Revenue 2021"
+  },
+  {
+   "fieldname": "column_break_xhubg",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "revenue_2022",
+   "fieldtype": "Currency",
+   "label": "Revenue 2022"
+  },
+  {
+   "fieldname": "revenue_2023",
+   "fieldtype": "Currency",
+   "label": "Revenue 2023"
+  },
+  {
+   "fieldname": "revenue_2024",
+   "fieldtype": "Currency",
+   "label": "Revenue 2024"
+  },
+  {
+   "fieldname": "revenue_2025",
+   "fieldtype": "Currency",
+   "label": "Revenue 2025"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2025-06-22 20:31:47.560742",
+ "modified_by": "Administrator",
+ "module": "Newcom Sales App",
+ "name": "NCS Sales Plan",
+ "naming_rule": "By fieldname",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Sales User",
+   "share": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": [
+  {
+   "color": "Green",
+   "title": "Active"
+  },
+  {
+   "color": "Gray",
+   "title": "Inactive"
+  },
+  {
+   "color": "Red",
+   "title": "Closed"
+  }
+ ]
+}
