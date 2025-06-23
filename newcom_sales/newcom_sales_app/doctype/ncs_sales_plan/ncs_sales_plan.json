@@ -120,7 +120,7 @@
    "fieldname": "nature_of_business",
    "fieldtype": "Link",
    "label": "Nature of Business",
-   "options": "Customer Nature"
+   "options": "NCS Customer Nature"
   },
   {
    "fieldname": "sales_person",
@@ -368,7 +368,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-23 08:07:48.440940",
+ "modified": "2025-06-23 08:49:41.113809",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "NCS Sales Plan",
