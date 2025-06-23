@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:nature",
  "creation": "2025-06-23 08:49:11.089827",
@@ -27,7 +28,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-23 08:49:11.089827",
+ "modified": "2025-06-23 08:52:46.082965",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "NCS Customer Nature",

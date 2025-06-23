@@ -1,5 +1,6 @@
 {
  "actions": [],
+ "allow_import": 1,
  "allow_rename": 1,
  "autoname": "field:customer_sub_group",
  "creation": "2025-06-23 08:02:36.759582",
@@ -41,7 +42,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-23 08:04:36.830141",
+ "modified": "2025-06-23 08:53:03.725897",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "Customer Sub Group",
