@@ -110,7 +110,7 @@
    "fieldtype": "Link",
    "in_standard_filter": 1,
    "label": "Customer Sub Group",
-   "options": "Division"
+   "options": "Customer Sub Group"
   },
   {
    "fieldname": "column_break_rw7fi",
@@ -368,7 +368,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-22 20:31:47.560742",
+ "modified": "2025-06-23 08:07:48.440940",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "NCS Sales Plan",
