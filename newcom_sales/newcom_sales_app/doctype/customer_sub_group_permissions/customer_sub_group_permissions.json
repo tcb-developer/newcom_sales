@@ -1,0 +1,73 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2025-06-23 08:04:23.963267",
+ "default_view": "List",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "doc",
+  "document",
+  "is_default",
+  "apply_for_all_docs",
+  "applicable_document",
+  "user_permission"
+ ],
+ "fields": [
+  {
+   "fieldname": "doc",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Doc",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "document",
+   "fieldtype": "Dynamic Link",
+   "in_list_view": 1,
+   "label": "Document",
+   "options": "doc"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_default",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Is Default"
+  },
+  {
+   "default": "1",
+   "fieldname": "apply_for_all_docs",
+   "fieldtype": "Check",
+   "in_list_view": 1,
+   "label": "Apply for All Docs"
+  },
+  {
+   "depends_on": "eval:doc.apply_for_all_docs == 0;",
+   "fieldname": "applicable_document",
+   "fieldtype": "Link",
+   "label": "Applicable Document",
+   "options": "DocType"
+  },
+  {
+   "fieldname": "user_permission",
+   "fieldtype": "Link",
+   "label": "User Permission",
+   "options": "User Permission",
+   "read_only": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "istable": 1,
+ "links": [],
+ "modified": "2025-06-23 08:04:23.963267",
+ "modified_by": "Administrator",
+ "module": "Newcom Sales App",
+ "name": "Customer Sub Group Permissions",
+ "owner": "Administrator",
+ "permissions": [],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}
