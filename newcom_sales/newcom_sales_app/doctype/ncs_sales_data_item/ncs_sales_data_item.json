@@ -17,21 +17,23 @@
   "column_break_piujh",
   "total_selling_amount",
   "total_buying_amount",
-  "gross_profit"
+  "gross_profit",
+  "section_break_7nxac",
+  "date",
+  "month_and_year",
+  "sales_invoice"
  ],
  "fields": [
   {
    "fieldname": "item",
-   "fieldtype": "Link",
+   "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Item",
-   "options": "Item"
+   "label": "Item"
   },
   {
    "fieldname": "brand",
-   "fieldtype": "Link",
-   "label": "Brand",
-   "options": "Brand"
+   "fieldtype": "Data",
+   "label": "Brand"
   },
   {
    "fieldname": "description",
@@ -83,12 +85,31 @@
   {
    "fieldname": "column_break_piujh",
    "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_7nxac",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "sales_invoice",
+   "fieldtype": "Data",
+   "label": "Sales Invoice"
+  },
+  {
+   "fieldname": "date",
+   "fieldtype": "Date",
+   "label": "Date"
+  },
+  {
+   "fieldname": "month_and_year",
+   "fieldtype": "Data",
+   "label": "Month & Year"
   }
  ],
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-06-23 10:04:09.088481",
+ "modified": "2025-07-17 11:22:12.268533",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "NCS Sales Data Item",
