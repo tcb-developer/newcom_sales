@@ -81,6 +81,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Customer Code",
+   "reqd": 1,
    "unique": 1
   },
   {
@@ -110,7 +111,7 @@
    "fieldtype": "Link",
    "in_standard_filter": 1,
    "label": "Customer Sub Group",
-   "options": "Division"
+   "options": "Customer Sub Group"
   },
   {
    "fieldname": "column_break_rw7fi",
@@ -120,7 +121,7 @@
    "fieldname": "nature_of_business",
    "fieldtype": "Link",
    "label": "Nature of Business",
-   "options": "Customer Nature"
+   "options": "NCS Customer Nature"
   },
   {
    "fieldname": "sales_person",
@@ -368,7 +369,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-22 20:31:47.560742",
+ "modified": "2025-06-23 09:00:21.309364",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "NCS Sales Plan",
