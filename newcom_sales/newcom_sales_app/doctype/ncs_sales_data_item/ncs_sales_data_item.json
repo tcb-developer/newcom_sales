@@ -32,8 +32,9 @@
   },
   {
    "fieldname": "brand",
-   "fieldtype": "Data",
-   "label": "Brand"
+   "fieldtype": "Link",
+   "label": "Brand",
+   "options": "Brand"
   },
   {
    "fieldname": "description",
@@ -109,7 +110,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2025-07-17 11:22:12.268533",
+ "modified": "2025-07-21 14:58:16.929702",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "NCS Sales Data Item",
