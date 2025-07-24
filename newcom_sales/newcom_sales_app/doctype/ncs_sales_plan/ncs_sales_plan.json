@@ -369,7 +369,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-06-23 09:00:21.309364",
+ "modified": "2025-07-21 15:25:29.260418",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "NCS Sales Plan",
@@ -398,6 +398,8 @@
    "share": 1
   }
  ],
+ "search_fields": "customer_name, customer_group, customer_sub_group",
+ "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [
@@ -413,5 +415,6 @@
    "color": "Red",
    "title": "Closed"
   }
- ]
+ ],
+ "title_field": "customer_code"
 }

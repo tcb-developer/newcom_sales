@@ -26,13 +26,20 @@
   "q_and_fy",
   "items_section",
   "items",
+  "section_break_mdozw",
+  "buying_total",
+  "selling_total",
+  "column_break_41rga",
+  "total_qty",
+  "total_gross_profit",
   "amended_from"
  ],
  "fields": [
   {
    "fieldname": "customer_code",
-   "fieldtype": "Data",
-   "label": "Customer Code"
+   "fieldtype": "Link",
+   "label": "Customer Code",
+   "options": "NCS Sales Plan"
   },
   {
    "fetch_from": "customer_code.customer_name",
@@ -43,20 +50,23 @@
   {
    "fetch_from": "customer_code.customer_group",
    "fieldname": "customer_group",
-   "fieldtype": "Data",
-   "label": "Customer Group"
+   "fieldtype": "Link",
+   "label": "Customer Group",
+   "options": "Customer Group"
   },
   {
    "fetch_from": "customer_code.customer_sub_group",
    "fieldname": "customer_sub_group",
-   "fieldtype": "Data",
-   "label": "Customer Sub Group"
+   "fieldtype": "Link",
+   "label": "Customer Sub Group",
+   "options": "Customer Sub Group"
   },
   {
    "fetch_from": "customer_code.sales_person",
    "fieldname": "sales_person",
-   "fieldtype": "Data",
-   "label": "Sales Person"
+   "fieldtype": "Link",
+   "label": "Sales Person",
+   "options": "Sales Person"
   },
   {
    "fieldname": "column_break_ko3bw",
@@ -127,12 +137,49 @@
    "fieldtype": "Select",
    "label": "Naming Series",
    "options": "NCS-SD-.YYYY.-"
+  },
+  {
+   "fieldname": "section_break_mdozw",
+   "fieldtype": "Section Break",
+   "label": "Totals"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "buying_total",
+   "fieldtype": "Currency",
+   "label": "Buying Total",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_41rga",
+   "fieldtype": "Column Break"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "selling_total",
+   "fieldtype": "Currency",
+   "label": "Selling Total",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "total_gross_profit",
+   "fieldtype": "Currency",
+   "label": "Total Gross Profit",
+   "read_only": 1
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "total_qty",
+   "fieldtype": "Float",
+   "label": "Total Qty",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-17 11:16:08.156049",
+ "modified": "2025-07-21 22:46:32.571329",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "NCS Sales Data",
