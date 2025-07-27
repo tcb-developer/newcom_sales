@@ -51,13 +51,13 @@ def get_columns(filters={}):
         #     "options": "Customer Sub Group",
         #     "width": 200,
         # },
-        {
-            "label": _("Sales Person"),
-            "fieldname": "sales_person",
-            "fieldtype": "Link",
-            "options": "Sales Person",
-            "width": 140,
-        },
+        # {
+        #     "label": _("Sales Person"),
+        #     "fieldname": "sales_person",
+        #     "fieldtype": "Link",
+        #     "options": "Sales Person",
+        #     "width": 140,
+        # },
         # {
         #     "label": _("Sales Invoice / Item"),
         #     "fieldname": "sales_invoice",
