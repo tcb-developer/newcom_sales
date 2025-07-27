@@ -1,5 +1,15 @@
+// Copyright (c) 2025, TCB and contributors
+// For license information, please see license.txt
+/* eslint-disable */
+
 frappe.query_reports["Sales Data"] = {
 	filters: [
+		{
+			fieldname: "customer",
+			label: __("Customer"),
+			fieldtype: "Link",
+			options: "NCS Sales Plan",
+		},
 		{
 			fieldname: "from_date",
 			label: __("From Date"),
@@ -15,10 +25,9 @@ frappe.query_reports["Sales Data"] = {
 			reqd: 1,
 		},
 		{
-			fieldname: "customer",
-			label: __("Customer"),
-			fieldtype: "Link",
-			options: "NCS Sales Plan",
+			fieldname: "sales_invoice",
+			label: __("Sales Invoice"),
+			fieldtype: "Data",
 		},
 		{
 			fieldname: "customer_group",
@@ -46,9 +55,9 @@ frappe.query_reports["Sales Data"] = {
 		},
 	],
 	tree: true,
-	name_field: "customer",
-	parent_field: "parent",
-	initial_depth: 0,
+	name_field: "sales_invoice",
+	parent_field: "sales_invoice",
+	initial_depth: 3,
 	formatter: function (value, row, column, data, default_formatter) {
 		if (column.fieldname == "sales_invoice" && column.options == "Brand" && data && data.indent == 0) {
 			column._options = "Sales Invoice";

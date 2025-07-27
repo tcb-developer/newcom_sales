@@ -38,6 +38,8 @@
   {
    "fieldname": "customer_code",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Customer Code",
    "options": "NCS Sales Plan"
   },
@@ -45,6 +47,8 @@
    "fetch_from": "customer_code.customer_name",
    "fieldname": "customer_name",
    "fieldtype": "Data",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Customer Name"
   },
   {
@@ -109,6 +113,7 @@
    "fieldname": "sales_invoice",
    "fieldtype": "Data",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Sales Invoice"
   },
   {
@@ -179,7 +184,7 @@
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-07-21 22:46:32.571329",
+ "modified": "2025-07-26 16:18:42.879035",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "NCS Sales Data",

@@ -11,24 +11,17 @@ from frappe.utils import cstr, flt
 def execute(filters={}):
     columns = get_columns(filters=filters)
     si_list = get_si_list(filters=filters)
-    data = group_items_by_invoice(si_list, filters=filters)
+    data = group_items_by_invoice(si_list)
     return columns, data
 
 
 def get_columns(filters={}):
     columns = [
-        # {
-        #     "label": _("Customer"),
-        #     "fieldname": "customer",
-        #     "fieldtype": "Link",
-        #     "options": "NCS Sales Plan",
-        #     "width": 150,
-        # },
         {
             "label": _("Customer"),
             "fieldname": "customer",
-            "fieldtype": "Data",
-            # "options": "NCS Sales Plan",
+            "fieldtype": "Link",
+            "options": "NCS Sales Plan",
             "width": 150,
         },
         {
@@ -149,6 +142,7 @@ def get_year_columns(filters={}):
 
     columns = []
     if results:
+        frappe.log_error("Year column results", results)
         for result in results:
             label = result.get("year")
             column = {
@@ -161,39 +155,6 @@ def get_year_columns(filters={}):
             columns.append(column)
 
     return columns
-
-def get_years(filters={}):
-    doctype = "NCS Sales Data"
-    si = frappe.qb.DocType(doctype)
-
-    # Query
-    query = (
-        frappe.qb.from_(si)
-        .select(
-            si.year,
-        )
-        .groupby(si.year)
-        .orderby(si.year)
-    )
-
-    base_condition = si.docstatus == 1
-
-    if filters.get("from_date"):
-        base_condition &= si.date >= filters.get("from_date")
-
-    if filters.get("to_date"):
-        base_condition &= si.date <= filters.get("to_date")
-
-    query = query.where(base_condition)
-    results = query.run(as_dict=True)
-
-    years = []
-    if results:
-        for result in results:
-            label = result.get("year")
-            years.append(scrub(label))
-
-    return years
 
 
 def get_si_list(filters={}):
@@ -274,6 +235,8 @@ def get_si_list(filters={}):
         brand = filters.get("brand")
         base_condition &= sii.brand == brand
 
+    frappe.log_error("Get si list filters", filters)
+
     query = query.where(base_condition)
 
     results = query.run(as_dict=True)
@@ -281,14 +244,17 @@ def get_si_list(filters={}):
     return results
 
 
-def group_items_by_invoice(si_list, filters={}):
+def group_items_by_invoice(si_list):
+    frappe.log_error("Si list", si_list)
     grouped = OrderedDict()
 
     customer_total = OrderedDict()
     brand_total = frappe._dict({})
 
     for row in si_list:
-        grouped.setdefault(row.customer, [get_invoice_row(row, filters=filters)])
+        grouped.setdefault(row.customer, [get_invoice_row(row)])
+        customer_total.setdefault(row.customer, 0)
+        brand_total.setdefault(row.brand, frappe._dict({})).setdefault(row.customer, 0)
 
         data = grouped.get(row.customer)
 
@@ -298,9 +264,6 @@ def group_items_by_invoice(si_list, filters={}):
         if row.year:
             year_field = scrub(row.year)
 
-        customer_total.setdefault(row.customer, frappe._dict({})).setdefault(year_field, 0)
-        brand_total.setdefault(row.brand, frappe._dict({})).setdefault(row.customer, frappe._dict({})).setdefault(year_field, 0)
-
         data.append(
                 {
                     "indent": 1.0,
@@ -309,14 +272,12 @@ def group_items_by_invoice(si_list, filters={}):
                     "parent": row.customer,
                     "customer": "-",
                     "customer_name": "-",
-                    "sales_person": "-",
                     # "qty": row.qty,
                     # "selling_total": row.total_selling_amount,
                     # "buying_total": row.total_buying_amount,
                     "total_selling_amount": row.total_selling_amount,
                     "year": row.year,
                     "customer_org": row.customer,
-                    "years": get_years(filters=filters),
                 }
         )
         grouped.update({row.customer: data})
@@ -324,116 +285,60 @@ def group_items_by_invoice(si_list, filters={}):
     si_list.clear()
 
     for customer, items in grouped.items():
-        c_total_data = customer_total.get(customer)
-        c_total = 0
+        c_total = customer_total.get(customer)
 
         for item in items:
-            indent = item.get("indent")
-            year_field = "year"
-            if item.get("year"):
-                year_field = scrub(item.get("year"))
-
-            if indent == 1.0:
-                if c_total_data:
-                    c_total = c_total_data.get(year_field)
-
-                c_total += flt(item.get("total_selling_amount"))
-                c_total_data.update({year_field: c_total})
+            c_total += flt(item.get("total_selling_amount"))
 
             brand = item.get("brand")
             b_total_data = brand_total.get(brand)
             if b_total_data:
-                b_c_data = b_total_data.get(customer)
-                if b_c_data:
-                    b_c_total = flt(b_c_data.get(year_field))
-                    b_c_total += flt(item.get("total_selling_amount"))
+                b_c_total = flt(b_total_data.get(customer))
+                b_c_total += flt(item.get("total_selling_amount"))
 
-                    b_c_data.update({year_field: b_c_total})
-                    b_total_data.update({customer: b_c_data})
-                    brand_total.update({brand: b_total_data})
-
+                b_total_data.update({customer: b_c_total})
+                brand_total.update({brand: b_total_data})
 
         # c_total = sum([flt(item.get("total_selling_amount")) for item in items])
         si_list.extend(items)
-        customer_total.update({customer: c_total_data})
+        customer_total.update({customer: c_total})
 
     new_si_list = []
     for row in si_list:
-        years = row.get("years")
-        can_append_row = False
+        year_field = "year"
+        if row.get("year"):
+            year_field = scrub(row.get("year"))
 
         indent = row.get("indent")
         brand = row.get("brand")
-        customer = row.get("customer_org") or row.get("customer")
 
-        if years:
-            for year in years:
-                year_field = year
-
-                if indent == 0.0:
-                    c_total_data = customer_total.get(row.get("customer"))
-                    c_total = 0
-                    if c_total_data:
-                        c_total = c_total_data.get(year_field)
-                    row[year_field] = c_total
-                    # new_si_list.append(row)
-                    can_append_row = True
-
-                b_c_total = 0
-                if indent == 1.0:
-                    b_total_data = brand_total.get(brand)
-                    if b_total_data:
-                        b_c_data = b_total_data.get(customer)
-                        if b_c_data:
-                            b_c_total = b_c_data.get(year_field)
-                            if b_c_total:
-                                row[year_field] = flt(b_c_total)
-                                # del b_total_data[row.get("customer_org")]
-                                del b_c_data[year_field]
-                                # new_si_list.append(row)
-                                can_append_row = True
-                            # else:
-                            #     can_append_row = False
-                    #     else:
-                    #         can_append_row = False
-                    # else:
-                    #     can_append_row   = False
-
-        if can_append_row:
+        if indent == 0.0:
+            row[year_field] = customer_total.get(row.get("customer"))
             new_si_list.append(row)
-        # year_field = "year"
-        # if row.get("year"):
-        #     year_field = scrub(row.get("year"))
 
-        # indent = row.get("indent")
-        # brand = row.get("brand")
+        b_c_total = 0
+        if indent == 1.0:
+            b_total_data = brand_total.get(brand)
+            if b_total_data:
+                b_c_total = b_total_data.get(row.get("customer_org"))
+                if b_c_total:
+                    row[year_field] = flt(b_c_total)
 
-        # if indent == 0.0:
-        #     c_total_data = customer_total.get(row.get("customer"))
-        #     c_total = 0
-        #     if c_total_data:
-        #         c_total = c_total_data.get(year_field)
-        #     row[year_field] = c_total
-        #     new_si_list.append(row)
+                    del b_total_data[row.get("customer_org")]
+                    new_si_list.append(row)
 
-        # b_c_total = 0
-        # if indent == 1.0:
-        #     b_total_data = brand_total.get(brand)
-        #     if b_total_data:
-        #         b_c_data = b_total_data.get(row.get("customer_org"))
-        #         if b_c_data:
-        #             b_c_total = b_c_data.get(year_field)
-        #             if b_c_total:
-        #                 row[year_field] = flt(b_c_total)
-        #                 # del b_total_data[row.get("customer_org")]
-        #                 del b_c_data[year_field]
-        #                 new_si_list.append(row)
+
+
+    frappe.log_error("Brand total data", brand_total)
+    frappe.log_error("Customer total data", customer_total)
+
+    frappe.log_error("Group items by invoice", si_list)
 
     # return si_list
     return new_si_list
 
 
-def get_invoice_row(row, filters={}):
+def get_invoice_row(row):
     # header row format
     year_field = "year"
     if row.year:
@@ -451,7 +356,6 @@ def get_invoice_row(row, filters={}):
             "sales_person": row.sales_person,
             "total_selling_amount": row.total_selling_amount,
             "year": row.year,
-            "years": get_years(filters=filters),
             # "qty": frappe.db.get_value(
             #     "NCS Sales Data", row.name, "total_qty"
             # ),
