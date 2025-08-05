@@ -15,6 +15,7 @@
   "status",
   "customer_group",
   "customer_sub_group",
+  "remarks",
   "column_break_rw7fi",
   "nature_of_business",
   "sales_person",
@@ -58,6 +59,7 @@
   "owner_email_id",
   "owner_dob",
   "revenue_tab",
+  "revenue_2018",
   "revenue_2019",
   "revenue_2020",
   "revenue_2021",
@@ -97,7 +99,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Active\nInactive\nClosed"
+   "options": "Active\nDisabled\nClosed\nDuplicate"
   },
   {
    "fieldname": "customer_group",
@@ -365,11 +367,21 @@
    "fieldname": "revenue_2025",
    "fieldtype": "Currency",
    "label": "Revenue 2025"
+  },
+  {
+   "fieldname": "remarks",
+   "fieldtype": "Small Text",
+   "label": "Remarks"
+  },
+  {
+   "fieldname": "revenue_2018",
+   "fieldtype": "Currency",
+   "label": "Revenue 2018"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-21 15:25:29.260418",
+ "modified": "2025-07-31 14:56:52.389608",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "NCS Sales Plan",

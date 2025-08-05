@@ -162,6 +162,7 @@ def get_year_columns(filters={}):
 
     return columns
 
+
 def get_years(filters={}):
     doctype = "NCS Sales Data"
     si = frappe.qb.DocType(doctype)
