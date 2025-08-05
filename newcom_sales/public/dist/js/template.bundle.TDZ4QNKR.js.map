@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": ["frappe-html:/home/hemant/Documents/NEWCOMM/frappe-bench/apps/newcom_sales/newcom_sales/public/js/templates/ncs_contact.html"],
+  "sourcesContent": ["\n\tfrappe.templates['ncs_contact'] = `<div class=\"clearfix\"></div>\n{% for(var i=0, l=ncs_contact_list.length; i<l; i++) { %}\n<div class=\"address-box\">\n\t<p class=\"h6\">\n\t\t{%= i+1 %}. {%= ncs_contact_list[i].contact_name %}{% if(ncs_contact_list[i].contact_type) { %}\n\t\t<span class=\"text-muted\">({%= __(ncs_contact_list[i].contact_type) %})</span>{% } %}\n\t\t{% if(ncs_contact_list[i].disabled) { %}\n\t\t<span class=\"text-muted\">({%= __(\"Disabled\") %})</span>{% } %}\n\n\t\t<a href=\"/app/Form/NCS Customer Contact/{%= encodeURIComponent(ncs_contact_list[i].name) %}\" class=\"btn btn-default btn-xs pull-right\"\n\t\t\tstyle=\"margin-top:-3px; margin-right: -5px;\">\n\t\t\t{%= __(\"Edit\") %}</a>\n\t</p>\n\t<p>{%= ncs_contact_list[i].display %}</p>\n</div>\n{% } %}\n{% if(!ncs_contact_list.length) { %}\n<p class=\"text-muted small\">{%= __(\"No contact added yet.\") %}</p>\n{% } %}\n<p><button class=\"btn btn-xs btn-default btn-address\">{{ __(\"New Contact\") }}</button></p>`;\n"],
+  "mappings": ";;AACC,SAAO,UAAU,iBAAiB;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;AAAA;",
+  "names": []
+}
