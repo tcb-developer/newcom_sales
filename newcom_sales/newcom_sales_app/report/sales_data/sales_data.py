@@ -288,12 +288,14 @@ def group_items_by_invoice(si_list, filters={}):
     customer_total = OrderedDict()
     brand_total = frappe._dict({})
 
+    years = get_years(filters=filters)
+
     for row in si_list:
-        grouped.setdefault(row.customer, [get_invoice_row(row, filters=filters)])
+        grouped.setdefault(row.customer, [get_invoice_row(row, years, filters=filters)])
 
         data = grouped.get(row.customer)
 
-        new_row = copy.deepcopy(row)
+        # new_row = copy.deepcopy(row)
 
         year_field = "year"
         if row.year:
@@ -317,7 +319,7 @@ def group_items_by_invoice(si_list, filters={}):
                     "total_selling_amount": row.total_selling_amount,
                     "year": row.year,
                     "customer_org": row.customer,
-                    "years": get_years(filters=filters),
+                    "years": years,
                 }
         )
         grouped.update({row.customer: data})
@@ -434,7 +436,7 @@ def group_items_by_invoice(si_list, filters={}):
     return new_si_list
 
 
-def get_invoice_row(row, filters={}):
+def get_invoice_row(row, years, filters={}):
     # header row format
     year_field = "year"
     if row.year:
@@ -444,15 +446,16 @@ def get_invoice_row(row, filters={}):
             "indent": 0.0,
             "customer": row.customer,
             "customer_name": row.customer_name,
-            year_field: frappe.db.get_value(
-                "NCS Sales Data", row.name, "selling_total"
-            ),
+            # year_field: frappe.db.get_value(
+            #     "NCS Sales Data", row.name, "selling_total"
+            # ),
+            year_field: row.get("selling_total"),
             "brand": "All",
             "parent": None,
             "sales_person": row.sales_person,
             "total_selling_amount": row.total_selling_amount,
             "year": row.year,
-            "years": get_years(filters=filters),
+            "years": years,
             # "qty": frappe.db.get_value(
             #     "NCS Sales Data", row.name, "total_qty"
             # ),
