@@ -1,5 +1,5 @@
-let default_from_date = frappe.query_report.get_filter_value("from_date") | erpnext.utils.get_fiscal_year(frappe.datetime.get_today(), true)[1];
-let default_to_date = frappe.query_report.get_filter_value("to_date") | erpnext.utils.get_fiscal_year(frappe.datetime.get_today(), true)[2];
+let default_from_date = frappe.query_report.get_filter_value("from_date") || erpnext.utils.get_fiscal_year(frappe.datetime.get_today(), true)[1];
+let default_to_date = frappe.query_report.get_filter_value("to_date") || erpnext.utils.get_fiscal_year(frappe.datetime.get_today(), true)[2];
 
 frappe.query_reports["Sales Data"] = {
 	filters: [
