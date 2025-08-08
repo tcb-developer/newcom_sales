@@ -92,8 +92,7 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Customer Name",
-   "reqd": 1,
-   "unique": 1
+   "reqd": 1
   },
   {
    "fieldname": "status",
@@ -381,7 +380,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-07-31 14:56:52.389608",
+ "modified": "2025-08-08 08:41:42.220726",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "NCS Sales Plan",
