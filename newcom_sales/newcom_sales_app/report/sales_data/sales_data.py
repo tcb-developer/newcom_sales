@@ -306,8 +306,6 @@ def get_si_list(filters={}):
 
     results = query.run(as_dict=True)
 
-    frappe.log_error("Sales data results list", f"{len(results)}")
-
     return results
 
 
@@ -352,8 +350,6 @@ def group_items_by_invoice(si_list, filters={}):
                 }
         )
         grouped.update({row.customer: data})
-
-    frappe.log_error("Grouped data", grouped)
 
     si_list.clear()
 
