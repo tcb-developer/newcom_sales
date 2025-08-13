@@ -68,4 +68,11 @@ frappe.query_reports["Sales Data"] = {
 
 		return value;
 	},
+	// onload: function (report) {
+	// 	report.get_columns().forEach(col => {
+	// 		if (["Currency", "Float"].includes(col.fieldtype)) {
+	// 			col.no_total = 1; // hide framework auto total
+	// 		}
+	// 	});
+	// }
 };

@@ -12,7 +12,34 @@ def execute(filters={}):
     columns = get_columns(filters=filters)
     si_list = get_si_list(filters=filters)
     data = group_items_by_invoice(si_list, filters=filters)
-    return columns, data
+    # return columns, data
+
+    # Calculate totals from leaf rows only
+    report_summary = []
+    years = get_years(filters=filters)
+    total_sales = 0
+    for year in years:
+        total_sales = sum(flt(row.get(year)) for row in data if row.get("indent") == 1.0)
+        summary = {
+                "label": f"Total Sales {year.upper()}",
+                "value": total_sales,
+                "datatype": "Currency",
+                "indicator": "Green"
+            }
+        report_summary.append(summary)
+    # total_sales = sum(flt(row.get("total_selling_amount"))
+    #                   for row in data if row.get("indent") == 1.0)
+
+    # report_summary = [
+    #     {
+    #         "label": "Total Sales",
+    #         "value": total_sales,
+    #         "datatype": "Currency",
+    #         "indicator": "Green"
+    #     }
+    # ]
+
+    return columns, data, None, None, report_summary
 
 
 def get_columns(filters={}):
@@ -279,6 +306,8 @@ def get_si_list(filters={}):
 
     results = query.run(as_dict=True)
 
+    frappe.log_error("Sales data results list", f"{len(results)}")
+
     return results
 
 
@@ -323,6 +352,8 @@ def group_items_by_invoice(si_list, filters={}):
                 }
         )
         grouped.update({row.customer: data})
+
+    frappe.log_error("Grouped data", grouped)
 
     si_list.clear()
 
