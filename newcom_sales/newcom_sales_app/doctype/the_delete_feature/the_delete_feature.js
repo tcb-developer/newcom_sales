@@ -6,7 +6,6 @@ frappe.ui.form.on('The Delete Feature', {
 
 	},
 	delete_all_data_button: function (frm) {
-		frappe.msgprint(`Selected doctype ${frm.doc.doctype_name}`)
 		frappe.call({
 			method: "delete_all_records",
 			doc: frm.doc,

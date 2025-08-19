@@ -9,6 +9,8 @@
  "engine": "InnoDB",
  "field_order": [
   "doctype_name",
+  "enable_filters",
+  "filters",
   "delete_all_data_button",
   "amended_from"
  ],
@@ -19,8 +21,7 @@
    "in_list_view": 1,
    "label": "Doctype",
    "options": "DocType",
-   "reqd": 1,
-   "unique": 1
+   "reqd": 1
   },
   {
    "fieldname": "amended_from",
@@ -37,12 +38,26 @@
    "fieldname": "delete_all_data_button",
    "fieldtype": "Button",
    "label": "Delete All Data"
+  },
+  {
+   "allow_on_submit": 1,
+   "depends_on": "eval: doc.enable_filters",
+   "fieldname": "filters",
+   "fieldtype": "JSON",
+   "label": "Filters"
+  },
+  {
+   "allow_on_submit": 1,
+   "default": "0",
+   "fieldname": "enable_filters",
+   "fieldtype": "Check",
+   "label": "Enable Filters"
   }
  ],
  "index_web_pages_for_search": 1,
  "is_submittable": 1,
  "links": [],
- "modified": "2025-08-13 12:28:48.676852",
+ "modified": "2025-08-19 15:49:31.164839",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "The Delete Feature",
