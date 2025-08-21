@@ -19,43 +19,24 @@ def execute(filters={}):
     years = get_years(filters=filters)
     total_sales = 0
     for year in years:
-        total_sales = sum(flt(row.get(year)) for row in data if row.get("indent") == 1.0)
+        total_sales = sum(flt(row.get(year)) for row in data if row.get("indent") == 0.0)
         summary = {
                 "label": f"Total Sales {year.upper()}",
                 "value": total_sales,
                 "datatype": "Currency",
-                "indicator": "Green"
+                "indicator": "Blue"
             }
         report_summary.append(summary)
-    # total_sales = sum(flt(row.get("total_selling_amount"))
-    #                   for row in data if row.get("indent") == 1.0)
-
-    # report_summary = [
-    #     {
-    #         "label": "Total Sales",
-    #         "value": total_sales,
-    #         "datatype": "Currency",
-    #         "indicator": "Green"
-    #     }
-    # ]
 
     return columns, data, None, None, report_summary
 
 
 def get_columns(filters={}):
     columns = [
-        # {
-        #     "label": _("Customer"),
-        #     "fieldname": "customer",
-        #     "fieldtype": "Link",
-        #     "options": "NCS Sales Plan",
-        #     "width": 150,
-        # },
         {
             "label": _("Customer"),
             "fieldname": "customer",
             "fieldtype": "Data",
-            # "options": "NCS Sales Plan",
             "width": 150,
         },
         {
@@ -65,31 +46,11 @@ def get_columns(filters={}):
             "width": 200,
         },
         # {
-        #     "label": _("Customer Group"),
-        #     "fieldname": "customer_group",
-        #     "fieldtype": "Link",
-        #     "options": "Customer Group",
-        #     "width": 100,
-        # },
-        # {
-        #     "label": _("Customer Sub Group"),
-        #     "fieldname": "customer_sub_group",
-        #     "fieldtype": "Link",
-        #     "options": "Customer Sub Group",
-        #     "width": 200,
-        # },
-        # {
         #     "label": _("Sales Person"),
         #     "fieldname": "sales_person",
         #     "fieldtype": "Link",
         #     "options": "Sales Person",
         #     "width": 140,
-        # },
-        # {
-        #     "label": _("Sales Invoice / Item"),
-        #     "fieldname": "sales_invoice",
-        #     "fieldtype": "Data",
-        #     "width": 150,
         # },
         {
             "label": _("Brand"),
@@ -98,48 +59,6 @@ def get_columns(filters={}):
             "options": "Brand",
             "width": 120,
         },
-        # {
-        #     "label": _("Qty"),
-        #     "fieldname": "qty",
-        #     "fieldtype": "Float",
-        #     "width": 150,
-        # },
-        # {
-        #     "label": _("Selling Total"),
-        #     "fieldname": "selling_total",
-        #     "fieldtype": "Currency",
-        #     "width": 150,
-        # },
-        # {
-        #     "label": _("Buying Total"),
-        #     "fieldname": "buying_total",
-        #     "fieldtype": "Currency",
-        #     "width": 150,
-        # },
-        # {
-        #     "label": _("Date"),
-        #     "fieldname": "date",
-        #     "fieldtype": "Date",
-        #     "width": 100,
-        # },
-        # {
-        #     "label": _("Year"),
-        #     "fieldname": "year",
-        #     "fieldtype": "Data",
-        #     "width": 100,
-        # },
-        # {
-        #     "label": _("Month & Year"),
-        #     "fieldname": "month_and_year",
-        #     "fieldtype": "Data",
-        #     "width": 150,
-        # },
-        # {
-        #     "label": _("Q & FY"),
-        #     "fieldname": "q_and_fy",
-        #     "fieldtype": "Data",
-        #     "width": 100,
-        # },
     ]
 
     year_columns = get_year_columns(filters=filters)
@@ -261,7 +180,7 @@ def get_si_list(filters={}):
             si.total_qty,
             si.name,
         )
-        .groupby(sii.name)
+        .groupby(sii.name, sii.sales_invoice)
         .orderby(sii.sales_invoice)
     )
 
@@ -340,9 +259,9 @@ def group_items_by_invoice(si_list, filters={}):
                     "customer": "-",
                     "customer_name": "-",
                     "sales_person": "-",
-                    # "qty": row.qty,
-                    # "selling_total": row.total_selling_amount,
-                    # "buying_total": row.total_buying_amount,
+                    "qty": row.qty,
+                    "selling_total": row.total_selling_amount,
+                    "buying_total": row.total_buying_amount,
                     "total_selling_amount": row.total_selling_amount,
                     "year": row.year,
                     "customer_org": row.customer,
@@ -382,8 +301,6 @@ def group_items_by_invoice(si_list, filters={}):
                     b_total_data.update({customer: b_c_data})
                     brand_total.update({brand: b_total_data})
 
-
-        # c_total = sum([flt(item.get("total_selling_amount")) for item in items])
         si_list.extend(items)
         customer_total.update({customer: c_total_data})
 
@@ -406,7 +323,6 @@ def group_items_by_invoice(si_list, filters={}):
                     if c_total_data:
                         c_total = c_total_data.get(year_field)
                     row[year_field] = c_total
-                    # new_si_list.append(row)
                     can_append_row = True
 
                 b_c_total = 0
@@ -418,48 +334,11 @@ def group_items_by_invoice(si_list, filters={}):
                             b_c_total = b_c_data.get(year_field)
                             if b_c_total:
                                 row[year_field] = flt(b_c_total)
-                                # del b_total_data[row.get("customer_org")]
                                 del b_c_data[year_field]
-                                # new_si_list.append(row)
                                 can_append_row = True
-                            # else:
-                            #     can_append_row = False
-                    #     else:
-                    #         can_append_row = False
-                    # else:
-                    #     can_append_row   = False
 
         if can_append_row:
             new_si_list.append(row)
-        # year_field = "year"
-        # if row.get("year"):
-        #     year_field = scrub(row.get("year"))
-
-        # indent = row.get("indent")
-        # brand = row.get("brand")
-
-        # if indent == 0.0:
-        #     c_total_data = customer_total.get(row.get("customer"))
-        #     c_total = 0
-        #     if c_total_data:
-        #         c_total = c_total_data.get(year_field)
-        #     row[year_field] = c_total
-        #     new_si_list.append(row)
-
-        # b_c_total = 0
-        # if indent == 1.0:
-        #     b_total_data = brand_total.get(brand)
-        #     if b_total_data:
-        #         b_c_data = b_total_data.get(row.get("customer_org"))
-        #         if b_c_data:
-        #             b_c_total = b_c_data.get(year_field)
-        #             if b_c_total:
-        #                 row[year_field] = flt(b_c_total)
-        #                 # del b_total_data[row.get("customer_org")]
-        #                 del b_c_data[year_field]
-        #                 new_si_list.append(row)
-
-    # return si_list
     return new_si_list
 
 
@@ -473,9 +352,6 @@ def get_invoice_row(row, years, filters={}):
             "indent": 0.0,
             "customer": row.customer,
             "customer_name": row.customer_name,
-            # year_field: frappe.db.get_value(
-            #     "NCS Sales Data", row.name, "selling_total"
-            # ),
             year_field: row.get("selling_total"),
             "brand": "All",
             "parent": None,
@@ -483,14 +359,5 @@ def get_invoice_row(row, years, filters={}):
             "total_selling_amount": row.total_selling_amount,
             "year": row.year,
             "years": years,
-            # "qty": frappe.db.get_value(
-            #     "NCS Sales Data", row.name, "total_qty"
-            # ),
-            # "selling_total": frappe.db.get_value(
-            #     "NCS Sales Data", row.name, "selling_total"
-            # ),
-            # "buying_total": frappe.db.get_value(
-            #     "NCS Sales Data", row.name, "buying_total"
-            # ),
         }
     )

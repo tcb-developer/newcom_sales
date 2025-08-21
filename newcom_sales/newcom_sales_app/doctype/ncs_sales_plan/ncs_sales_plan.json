@@ -15,7 +15,6 @@
   "status",
   "customer_group",
   "customer_sub_group",
-  "remarks",
   "column_break_rw7fi",
   "nature_of_business",
   "sales_person",
@@ -59,7 +58,6 @@
   "owner_email_id",
   "owner_dob",
   "revenue_tab",
-  "revenue_2018",
   "revenue_2019",
   "revenue_2020",
   "revenue_2021",
@@ -83,7 +81,6 @@
    "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Customer Code",
-   "reqd": 1,
    "unique": 1
   },
   {
@@ -98,7 +95,7 @@
    "fieldname": "status",
    "fieldtype": "Select",
    "label": "Status",
-   "options": "Active\nDisabled\nClosed\nDuplicate"
+   "options": "Active\nInactive\nClosed"
   },
   {
    "fieldname": "customer_group",
@@ -112,7 +109,7 @@
    "fieldtype": "Link",
    "in_standard_filter": 1,
    "label": "Customer Sub Group",
-   "options": "Customer Sub Group"
+   "options": "Division"
   },
   {
    "fieldname": "column_break_rw7fi",
@@ -122,7 +119,7 @@
    "fieldname": "nature_of_business",
    "fieldtype": "Link",
    "label": "Nature of Business",
-   "options": "NCS Customer Nature"
+   "options": "Customer Nature"
   },
   {
    "fieldname": "sales_person",
@@ -366,21 +363,11 @@
    "fieldname": "revenue_2025",
    "fieldtype": "Currency",
    "label": "Revenue 2025"
-  },
-  {
-   "fieldname": "remarks",
-   "fieldtype": "Small Text",
-   "label": "Remarks"
-  },
-  {
-   "fieldname": "revenue_2018",
-   "fieldtype": "Currency",
-   "label": "Revenue 2018"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-08-08 08:41:42.220726",
+ "modified": "2025-08-19 18:48:24.779510",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "NCS Sales Plan",
@@ -409,8 +396,6 @@
    "share": 1
   }
  ],
- "search_fields": "customer_name, customer_group, customer_sub_group",
- "show_title_field_in_link": 1,
  "sort_field": "modified",
  "sort_order": "DESC",
  "states": [
@@ -426,6 +411,5 @@
    "color": "Red",
    "title": "Closed"
   }
- ],
- "title_field": "customer_code"
+ ]
 }
