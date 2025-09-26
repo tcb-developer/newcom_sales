@@ -5,7 +5,7 @@ import frappe
 from frappe import _, scrub
 from collections import OrderedDict
 import copy
-from frappe.utils import cstr, flt
+from frappe.utils import cstr, flt, get_datetime
 
 
 def execute(filters={}):
@@ -45,13 +45,13 @@ def get_columns(filters={}):
             "fieldtype": "Data",
             "width": 200,
         },
-        # {
-        #     "label": _("Sales Person"),
-        #     "fieldname": "sales_person",
-        #     "fieldtype": "Link",
-        #     "options": "Sales Person",
-        #     "width": 140,
-        # },
+        {
+            "label": _("Sales Person"),
+            "fieldname": "sales_person",
+            "fieldtype": "Link",
+            "options": "Sales Person",
+            "width": 140,
+        },
         {
             "label": _("Brand"),
             "fieldname": "brand",
@@ -98,13 +98,22 @@ def get_year_columns(filters={}):
         for result in results:
             label = result.get("year")
             column = {
-                "label": _(f"{label} Sale"),
-                "fieldname": scrub(label),
+                "label": _(f"{label} Sale Target"),
+                "fieldname": scrub(f"{label}_target"),
                 "fieldtype": "Currency",
                 "width": 180,
             }
 
             columns.append(column)
+
+            column = {
+                "label": _(f"{label} Sale"),
+                "fieldname": scrub(label),
+                "fieldtype": "Currency",
+                "width": 180,
+            }
+            columns.append(column)
+
 
     return columns
 
@@ -139,6 +148,46 @@ def get_years(filters={}):
         for result in results:
             label = result.get("year")
             years.append(scrub(label))
+
+    return years
+
+
+def get_real_years(filters={}):
+    doctype = "NCS Sales Data"
+    si = frappe.qb.DocType(doctype)
+
+    # Query
+    query = (
+        frappe.qb.from_(si)
+        .select(
+            si.date,
+        )
+        .groupby(si.date)
+        .orderby(si.date)
+    )
+
+    base_condition = si.docstatus == 1
+
+    if filters.get("from_date"):
+        base_condition &= si.date >= filters.get("from_date")
+
+    if filters.get("to_date"):
+        base_condition &= si.date <= filters.get("to_date")
+
+    query = query.where(base_condition)
+    results = query.run(as_dict=True)
+
+    years = []
+    if results:
+        for result in results:
+            date = result.get("date")
+            if date:
+                try:
+                    year = get_datetime(date).date().year
+                    if year not in years:
+                        years.append(year)
+                except Exception:
+                    pass
 
     return years
 
@@ -258,7 +307,8 @@ def group_items_by_invoice(si_list, filters={}):
                     "parent": row.customer,
                     "customer": "-",
                     "customer_name": "-",
-                    "sales_person": "-",
+                    # "sales_person": "-",
+                    "sales_person": row.sales_person,
                     "qty": row.qty,
                     "selling_total": row.total_selling_amount,
                     "buying_total": row.total_buying_amount,
@@ -304,6 +354,10 @@ def group_items_by_invoice(si_list, filters={}):
         si_list.extend(items)
         customer_total.update({customer: c_total_data})
 
+    sales_target_data = get_sales_target_data(filters=filters)
+    frappe.log_error("Sales Target Data",sales_target_data)
+
+    is_logged = False
     new_si_list = []
     for row in si_list:
         years = row.get("years")
@@ -312,10 +366,27 @@ def group_items_by_invoice(si_list, filters={}):
         indent = row.get("indent")
         brand = row.get("brand")
         customer = row.get("customer_org") or row.get("customer")
+        sales_person = row.get("sales_person", "")
+
+        if not is_logged and brand != "All":
+            frappe.log_error("Report Data", f"Brand : {brand}\nSales Person : {sales_person}\nYears : {years}")
+            is_logged = True
 
         if years:
             for year in years:
+                target_amount = 0
+                total_target_amount = 0
+                if sales_target_data:
+                    st_found = [x for x in sales_target_data if x.get("sales_person") == sales_person and x.get("brand") == brand and x.get("fy") == year]
+                    if st_found:
+                        target_amount = flt(sum([i.get("sales_target_amount") for i in st_found]))
+
+                    st_found_2 = [x for x in sales_target_data if x.get("sales_person") == sales_person and x.get("fy") == year]
+                    if st_found_2:
+                        total_target_amount = flt(sum([i.get("sales_target_amount") for i in st_found_2]))
+
                 year_field = year
+                year_target_field = f"{year}_target"
 
                 if indent == 0.0:
                     c_total_data = customer_total.get(row.get("customer"))
@@ -323,6 +394,7 @@ def group_items_by_invoice(si_list, filters={}):
                     if c_total_data:
                         c_total = c_total_data.get(year_field)
                     row[year_field] = c_total
+                    row[year_target_field] = total_target_amount
                     can_append_row = True
 
                 b_c_total = 0
@@ -334,12 +406,90 @@ def group_items_by_invoice(si_list, filters={}):
                             b_c_total = b_c_data.get(year_field)
                             if b_c_total:
                                 row[year_field] = flt(b_c_total)
+                                row[year_target_field] = target_amount
                                 del b_c_data[year_field]
                                 can_append_row = True
 
         if can_append_row:
             new_si_list.append(row)
+
     return new_si_list
+
+
+def get_sales_target_data(filters={}):
+    years = get_real_years(filters=filters)
+    if not years:
+        return []
+    doctype = "Sales Target"
+    st = frappe.qb.DocType(doctype)
+    stl = frappe.qb.DocType("Sales Target List")
+
+
+    frappe.log_error("Years", years)
+
+    # Query
+    query = (
+        frappe.qb.from_(stl)
+        .join(st)
+        .on(st.name == stl.parent)
+        .select(
+            st.year,
+            stl.parent,
+            stl.brand,
+            stl.sales_person,
+            stl.sales_target_amount,
+        )
+        .groupby(stl.name, stl.parent)
+        .orderby(stl.brand)
+        .where((st.docstatus == 1) & (st.year.isin(years)))
+    )
+
+    if filters.get("sales_person"):
+        sales_person = filters.get("sales_person")
+        query = query.where(stl.sales_person == sales_person)
+
+    if filters.get("brand"):
+        brand = filters.get("brand")
+        query = query.where(stl.brand == brand)
+
+    frappe.log_error("Query", query)
+
+    records = query.run(as_dict=True)
+
+    filtered_records = []
+    data = {}
+    key_sep = "$_$_$"
+
+    for record in records:
+        sales_person = record.get("sales_person")
+        brand = record.get("brand")
+        year = record.get("year")
+        amount = record.get("sales_target_amount")
+
+        key = f"{sales_person}{key_sep}{brand}{key_sep}{year}"
+
+        temp = data.get(key, 0)
+        data[key] = temp + amount
+
+    for key, amount in data.items():
+        sales_person, brand, year = key.split(key_sep)
+        fy = ""
+        try:
+            fy = f"fy{str(year)[-2::]}"
+        except Exception:
+            pass
+
+        temp = {
+            "sales_person": sales_person,
+            "brand": brand,
+            "year": year,
+            "fy": fy,
+            "sales_target_amount": amount,
+        }
+
+        filtered_records.append(temp)
+
+    return filtered_records
 
 
 def get_invoice_row(row, years, filters={}):

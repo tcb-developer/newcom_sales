@@ -78,7 +78,6 @@
   {
    "fieldname": "customer_code",
    "fieldtype": "Data",
-   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Customer Code",
    "unique": 1
@@ -100,6 +99,7 @@
   {
    "fieldname": "customer_group",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Customer Group",
    "options": "Customer Group"
@@ -107,9 +107,10 @@
   {
    "fieldname": "customer_sub_group",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "in_standard_filter": 1,
    "label": "Customer Sub Group",
-   "options": "Division"
+   "options": "Customer Sub Group"
   },
   {
    "fieldname": "column_break_rw7fi",
@@ -119,11 +120,13 @@
    "fieldname": "nature_of_business",
    "fieldtype": "Link",
    "label": "Nature of Business",
-   "options": "Customer Nature"
+   "options": "NCS Customer Nature"
   },
   {
    "fieldname": "sales_person",
    "fieldtype": "Link",
+   "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Sales Person",
    "options": "Sales Person"
   },
@@ -175,6 +178,7 @@
   {
    "fieldname": "country",
    "fieldtype": "Link",
+   "in_standard_filter": 1,
    "label": "Country",
    "options": "Country"
   },
@@ -367,7 +371,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2025-08-19 18:48:24.779510",
+ "modified": "2025-09-01 15:49:46.108435",
  "modified_by": "Administrator",
  "module": "Newcom Sales App",
  "name": "NCS Sales Plan",
